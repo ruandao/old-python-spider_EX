@@ -1,16 +1,23 @@
 # 网站爬虫程序
 使用python编写一个网站爬虫程序，支持参数如下：
 
-    spider.py -u url -d deep -f logfile -l loglevel(1-5) --testself -thread number --dbfile filepath --key="HTML5"
+    spider.py -u url -d deep -f logfile -l loglevel(1-5) \
+            --testself -thread number --dbfile filepath --key="HTML5"
 
 ## 参数说明：
-    -u 指定爬虫开始地址
-    -d 指定爬虫深度
-    --thread 指定线程池大小，多线程爬取页面，可选参数，默认10
-    --dbfile 存放结果数据到指定的数据库（sqlite）文件中
-    --key 页面内的关键词，获取满足该关键词的页面，可选参数，默认为所有页面
-    -l 日志记录文件记录详细程度，数字越大记录越详细，可选参数，默认spider.log
-    --testself 程序自测，可选参数
+    -u          指定爬虫开始地址
+    -d          指定爬虫深度
+    --dbfile    存放结果数据到指定的数据库（sqlite）文件中
+    --thread    可选参数，默认10,          指定线程池大小，多线程爬取页面
+    --key       可选参数，默认为所有页面,  页面内的关键词，获取满足该关键词的页面
+    -f          可选参数，默认spider.log,  指定日志文件
+    -l          可选参数，默认1,           日志记录文件记录详细程度，数字越大记录越详细
+        1. link, http_status
+        2. link, http_status, content_size
+        3. link, http_status, content_size, server
+        4. link, http_status, content_size, server, last-modified
+        5. link, http_status, content_size, server, last-modified, start_time, end_time, ext_link
+    --testself  可选参数, 默认False,     程序自测
 
 ## 功能描述：
    1. 指定网站爬取指定深度的页面，将包含指定关键词的页面内容放到sqlite3数据库文件中
