@@ -17,9 +17,14 @@ def _displayStatus(mthread,linkm,queue, timeout=10):
     linkm   提供已经完成的任务数
     queue   用来标志任务是否完成
     """
+    # 记录展示过几次信息
+    count = 0
     while True:
         x,hadWorkThread= queue.get(timeout=timeout)
-        if not hadWorkThread: break
+        if not hadWorkThread: 
+            print("total status count: %s" % count)
+            break
+        count +=1
         task, thread = mthread.status()
         # record 的记录包括为抓取的和已经抓取的这个网站（或者说子域名下）的记录
         record = linkm.status()

@@ -21,7 +21,7 @@ class LinkM(object):
     ['http://www.hao123.com/child', 'http://www.hao123.com/stock', 'http://www.hao123.com/harcksafe', 'http://www.hao123.com/navhtm_navgd']
     """
     linkDeep        = {}    # 用于记录链接的深度
-    record_links    = set() # 用于记录接触过的链接，包括抓取的linkDeep和待抓取的wait_links
+    record_links    = {} # 用于记录接触过的链接，包括抓取的linkDeep和待抓取的wait_links,用来做粗判断
     def __init__(self, deep=0,lock = threading.RLock()):
         self.mutex = lock
         self.deep = deep
@@ -30,11 +30,10 @@ class LinkM(object):
         """
         display finished task number
         """
-        return len(self.linkDeep)
+        return len(self.record_links)
 
     def addLink(self, link, deep):
         with self.mutex:
-            self.record_links.add(link)
             self.linkDeep[link] = deep
 
     def extLinks(self,father, children):
@@ -44,20 +43,27 @@ class LinkM(object):
         """
         if len(self.linkDeep) == 0 :
             self.addLink(father, 0)
+            self.record_links[father]=0
             self.host = urllib2.Request(father).get_host()
         deep = self.linkDeep[father] +1
         if deep > self.deep:
             return []
         wait_links = []
-        # 1
         for link in children:
             host = urllib2.Request(link).get_host()
+            # 1
             if self.host in host:
-                with self.mutex:
-                    d = self.linkDeep.get(link,None)
-                    if d is None:
-                        wait_links.append(link)
-                        self.addLink(link, deep)
+                # 2
+                # 粗判断 链接是否访问过
+                inRecord = self.record_links.get(link,None)
+                if inRecord is None:
+                    self.record_links[link] = deep
+                    # 精判断
+                    with self.mutex:
+                        d = self.linkDeep.get(link,None)
+                        if d is None:
+                            wait_links.append(link)
+                            self.addLink(link, deep)
 
         return wait_links
 
