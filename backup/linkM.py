@@ -53,12 +53,13 @@ class LinkM(object):
         for link in children:
             host = urllib2.Request(link).get_host()
             if self.host in host:
-                with self.mutex:
-                    d = self.linkDeep.get(link,None)
-                    if d is None:
-                        wait_links.append(link)
-                        self.addLink(link, deep)
+                wait_links.append(link)
 
+        with self.mutex:
+            # 2
+            wait_links = list(set(wait_links) - set(self.record_links))
+            for l in wait_links:
+                self.addLink(l, deep)
         return wait_links
 
 

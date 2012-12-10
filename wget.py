@@ -2,27 +2,48 @@
 # coding: utf-8
 # author: ruandao(ljy080829@gmail.com)
 
+"""
+download 用来下载页面，将页面编码转换为utf-8,以及记录下载页面的一些信息
+"""
 
 import time
 import urllib
 import urllib2
+import logging
+import chardet
+
 
 
 def getNow():
     return time.strftime("%Y-%m-%d,%H-%M-%S",time.localtime(time.time()))
 
 class download(object):
+    """
+    >>> d = download("http://hao123.com")
+    >>> "<!--e5c0a08b-->" in d.getContent()
+    True
+
+    """
     def __init__(self, link, client=urllib):
-        self.link = link
+        self.link = link if link.startswith("http://") else "http://" + link
         self.start_time = getNow()
-        self.resp = client.urlopen(link)
+        self.resp = client.urlopen(self.link)
         self.content = self.resp.read()
         self.end_time = getNow()
+        self.log()
+
     def getContent(self):
-        return self.content
-    def status(self):
+        """这里要解决编码问题"""
+        coding = chardet.detect(self.content)['encoding']
+        if coding in ["GB2312","GBK"]:
+            coding = "GB18030"
+        c = self.content.decode(coding)
+        c = c.encode("utf-8")
+        return c
+
+    def log(self):
         """
-        return link, start_time, end_time, server, http_status, content_size, last_modified
+        log: link, start_time, end_time, server, http_status, content_size, last_modified
         """
         info = self.resp.info()
 
@@ -36,13 +57,10 @@ class download(object):
             "last_modified"     : info.getheader("Last-Modified"),
         }
 
-        return d
+        logging.info("",extra=d)
 
 
 if __name__ == "__main__":
-    d = download("http://hao123.com")
-    print d.getContent()
-    print d.status()
     import doctest
     print(doctest.testmod())
 

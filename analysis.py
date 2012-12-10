@@ -1,18 +1,36 @@
 #! /usr/bin/env python
 # coding: utf-8
 # author: ruandao(ljy080829@gmail.com)
+"""
+Analysis 用来从页面中提取链接，过滤结果数据
+"""
 
 from bs4 import BeautifulSoup 
 from urlparse import urljoin
-from ThreadTool import logT
 import urllib2
 
-class Analysis:
+
+class Analysis(object):
     """
     Analysis was use to filter content in web page, and log it
+    >>> a = Analysis()
+    >>> a.getAllLinks("http://hao123.com", "<a href='xdkfl'>xxdf</a><a href='/dfk'></a><a href='mailto:jubao@vip.163.com'></a><a href='http://xfd.com/dfkl'></a><a href='http://www.hao123.com/lkfd/dflk'></a>")
+    ['http://hao123.com/xdkfl', 'http://hao123.com/dfk', 'http://xfd.com/dfkl', 'http://www.hao123.com/lkfd/dflk']
     """
-    def add(self, content):
-        pass
+    def __init__(self,saver=None,keyword=None):
+        self.keyword=keyword
+        self.saver = saver
+
+    def filterContent(self, link, content):
+        if self.saver is None:
+            return
+        d = {
+            "keyword":self.keyword, 
+            "link":link, 
+            "content":content}
+        if self.keyword is None or self.keyword in content:
+            self.saver.saveContent(d)
+
     def getAllLinks(self,base_url, content):
         """
         就是提取页面的所有链接,要绝对链接的
@@ -27,6 +45,7 @@ class Analysis:
             link = link.split("#")[0]
             if len(link) == 0:
                 continue
+            link = link if link.startswith("http://") else "http://" + link
             link = urljoin(base_url,link)
             host = urllib2.Request(link).get_host()
             if host is None:
@@ -36,6 +55,7 @@ class Analysis:
         
 
         links = l
+
         return links
 
 

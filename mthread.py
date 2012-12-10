@@ -2,6 +2,8 @@
 # coding: utf-8
 # author: ruandao(ljy080829@gmail.com)
 """
+ThreadM 是线程池
+
 如何使用:
     e.g.:
         def worker(task):
@@ -97,11 +99,6 @@ class ThreadM:
                 self.ActiveOne()
 
 
-    def start(self):
-        return
-        for i in range(self.max_thread):
-            self.ActiveOne()
-
     def status(self):
         """
         返回当前任务数和线程数
@@ -118,7 +115,7 @@ class ThreadM:
         with self.lock:
             self.activeThread += 1
 
-    def join():
+    def join(self):
         self.task_queue.join()
 
 if __name__ == "__main__":

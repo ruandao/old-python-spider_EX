@@ -1,33 +1,26 @@
 #! /usr/bin/env python
 # coding: utf-8
 # author: ruandao(ljy080829@gmail.com)
+"""
+根据链接，抓取一个页面，然后返回提取的新的链接
+"""
 
 from wget import download
-from analysis import Analysis
-from linkM import LinkM
-from ThreadTool import logT,displayThreadStatus
 
-def workerFactory(Scratch = download,Analyer = Analysis,linkM = LinkM):
-    analyer = Analyer()
-    linkFilter = linkM()
-
+def workerFactory(analysis,linkm,download = download):
     def worker(link):
-        logT(link)
-        d = Scratch(link)
+        link = link if link.startswith("http://") else "http://" + link
+        d = download(link)
         content = d.getContent()
-        status = d.status()
 
-        all_link = analyer.getAllLinks(link, content)
-        ext_link = linkFilter.extLinks(link, all_link)
+        analysis.filterContent(link,content)
+        all_link = analysis.getAllLinks(link, content)
+        ext_link = linkm.extLinks(link, all_link)
         return ext_link
 
     return worker
 
 if __name__ == "__main__":
-    from mthread import ThreadM 
-    w = workerFactory()
-    tm = ThreadM(w)
-    tasks = [ "http://data.book.163.com/book/home/009200010009/000BOMbG.html", ]
-    tm.add(tasks)
-    displayThreadStatus()
+    import doctest
+    print(doctest.testmod())
 
