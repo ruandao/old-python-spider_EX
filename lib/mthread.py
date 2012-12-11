@@ -72,17 +72,17 @@ class Thread(threading.Thread):
                 # add new task to job queue
                 if new_tasks is not None:
                     self.thread_manage.add(new_tasks)
-            except Exception as e:
-                log.error("error on task: %s  %s",task,e)
-            finally:
-                self.task_queue.task_done()
 
             # caculate a true task cost how much
             _end_time = datetime.datetime.now()
             _cost_time = _end_time-_start_time
-            log.debug("[threasd] this task cost: %s seconds %s microseconds (new tasks: %s)",
-                               _cost_time.seconds,_cost_time.microseconds,len(new_tasks))
-            log.debug("[thread] task done")
+            log.debug("[threasd] this task cost: %s seconds %s microseconds (new tasks: %s)", _cost_time.seconds,_cost_time.microseconds,len(new_tasks))
+            except Exception as e:
+                log.error("error on task: %s  %s",task,e)
+            finally:
+                log.debug("[thread] task done")
+                self.task_queue.task_done()
+
 
 class ThreadM:
     """Thread manage
