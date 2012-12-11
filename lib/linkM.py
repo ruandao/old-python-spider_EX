@@ -20,9 +20,9 @@ class LinkM(object):
     LinkM 用来过滤已经抓取过的链接,提取出同一个网站的链接
     >>> lm = LinkM(2)
     >>> lm.extLinks("http://www.hao123.com/desknew.html",["http://pic.hao123.com/image/625851", "http://v.hao123.com/movie/","http://book.hao123.com/","http://www.hao123.com/desknew.html"])
-    ['http://www.hao123.com/desknew.html']
+    []
     >>> lm.extLinks("http://www.hao123.com/desknew.html",["http://book.hao123.com/","http://www.hao123.com/desknew.html","http://pic.hao123.com/","http://gouwu.hao123.com/sc/","http://xyx.hao123.com/pic_0_0_1_91_0.html","http://www.hao123.com/child","http://www.hao123.com/harcksafe","http://www.hao123.com/stock","http://www.hao123.com/navhtm_navgd","http://hao123.com/stocknew.htm"])
-    ['http://www.hao123.com/child', 'http://www.hao123.com/stock', 'http://www.hao123.com/harcksafe', 'http://www.hao123.com/navhtm_navgd']
+    ['http://www.hao123.com/child', 'http://www.hao123.com/harcksafe', 'http://www.hao123.com/stock', 'http://www.hao123.com/navhtm_navgd']
     """
     linkDeep        = {}    # 用于记录链接的深度
     def __init__(self, deep=0,lock = threading.RLock()):

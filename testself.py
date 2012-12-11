@@ -22,6 +22,7 @@ def TT(testself):
 
     tests = ["analysis.py","wget.py","linkM.py","mthread.py"]
     for testf in tests:
+        testf = "lib/%s" % testf
         result = os.popen("python %s" % testf).read()
         print result
 

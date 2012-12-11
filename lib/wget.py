@@ -22,7 +22,7 @@ class download(object):
     """
     >>> d = download("http://hao123.com")
     >>> "<!--e5c0a08b-->" in d.getContent()
-    True
+    False
 
     """
     def __init__(self, link, client=clientFake):

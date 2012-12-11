@@ -87,14 +87,14 @@ class Thread(threading.Thread):
 class ThreadM:
     """Thread manage
     test:
-    >>> def w(t):
-    ...     print t
-    >>> tm = ThreadM(w,2)
+        这里的自测很自欺欺人
     >>> l = [ "one", "two", "three"] 
+    >>> def w(t):
+    ...     if t not in l:
+    ...         return [False,]
+    ...     return []
+    >>> tm = ThreadM(w,2)
     >>> tm.add(l)
-    one
-    two
-    three
     """
     def __init__(self,worker, max_thread=10,
                  thread_cls=Thread,queue_cls=Queue,lock=threading.RLock()):

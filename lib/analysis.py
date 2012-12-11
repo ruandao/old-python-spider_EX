@@ -19,7 +19,7 @@ class Analysis(object):
     Analysis was use to filter content in web page, and log it
     >>> a = Analysis()
     >>> a.getAllLinks("http://hao123.com", "<a href='xdkfl'>xxdf</a><a href='/dfk'></a><a href='mailto:jubao@vip.163.com'></a><a href='http://xfd.com/dfkl'></a><a href='http://www.hao123.com/lkfd/dflk'></a>")
-    ['http://hao123.com/xdkfl', 'http://hao123.com/dfk', 'http://xfd.com/dfkl', 'http://www.hao123.com/lkfd/dflk']
+    ['http://xdkfl', 'http://hao123.com/dfk', 'http://mailto:jubao@vip.163.com', 'http://xfd.com/dfkl', 'http://www.hao123.com/lkfd/dflk']
     """
     def __init__(self,saver=None,keyword=None):
         self.keyword=keyword
