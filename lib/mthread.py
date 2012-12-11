@@ -58,9 +58,9 @@ class Thread(threading.Thread):
             if time_out:
                 _end_time = datetime.datetime.now()
                 _cost_time = _end_time-_start_time
-                log.debug("[threasd] this task cost: %-3s seconds %-6s microseconds (empty task)",
-                          _cost_time.seconds,_cost_time.microseconds)
+                log.debug("[threasd] this task cost: %-3s seconds %-6s microseconds (empty task)", _cost_time.seconds,_cost_time.microseconds)
                 log.debug("[thread] time out:%s get task:%s",time_out,task)
+
                 # info thread manage one thread game over
                 self.thread_manage.InActiveOne()
                 log.debug("[thread] over")
