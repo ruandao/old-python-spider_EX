@@ -1,10 +1,8 @@
-# 整个的逻辑，详情：流程图
-概览：
-![概览](./流程图/png/概览.png)
-当个页面抓取逻辑：
-![单个页面抓起逻辑](./流程图/png/页面抓取流程.png)
-线程池逻辑：
-![线程池逻辑](./流程图/png/线程池.png)
+# setup
+
+    pip install -r setup/pip\_install.txt
+
+推荐使用的时候加-B 参数，可以不产生.pyc文件
 
 # 网站爬虫程序
 使用python编写一个网站爬虫程序，支持参数如下：
@@ -46,3 +44,12 @@
     版本2： Spider2.py -u url -d deep -f logfile -l loglevel(1-5) --testself    
     版本3： Spider3.py -u url -d deep -f logfile -l loglevel(1-5) --testself -thread number     
     版本4： 剩下所有功能
+
+# 整个的逻辑，详情：流程图
+概览：
+![概览](./流程图/png/概览.png)
+当个页面抓取逻辑：
+![单个页面抓起逻辑](./流程图/png/页面抓取流程.png)
+线程池逻辑：
+![线程池逻辑](./流程图/png/线程池.png)
+

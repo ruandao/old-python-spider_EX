@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #encoding:utf-8
 """
 主运行文件，处理一些杂务
