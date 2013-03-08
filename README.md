@@ -2,7 +2,7 @@
 
     pip install -r setup/pip\_install.txt
 
-推荐使用的时候加-B 参数，可以不产生.pyc文件
+推荐使用的时候加-B 参数(python -B spider.py) ，可以不产生.pyc文件
 
 # 网站爬虫程序
 使用python编写一个网站爬虫程序，支持参数如下：
@@ -32,6 +32,9 @@
    4. 代码需要详尽的注释，自己需要深刻理解该程序所涉及到的各类知识点
    5. 需要自己实现线程池
 
+## 各文件文档
+    1. 查阅doc目录下文件
+    2. 查阅各文件本身的注释
 ## 提示：
     1. 使用re urllib/urllib2 beautifulsoup/lxml2 threading optparse Queue sqlite3 logger doctest等模块
     2. 注意是“线程池”而不仅仅是多线程
